@@ -1,0 +1,282 @@
+@import "tailwindcss";
+
+/* ============================================
+   ATTANZEEL CBT COLOR SYSTEM
+   ============================================ */
+
+:root {
+  --navy: #0f1f33;
+  --deep: #15294a;
+  --sb-bg: #0a1628;
+  --card: #1a3352;
+  --surface: #122540;
+  --text: #e8f0f8;
+  --muted: #8ab4d8;
+  --border: rgba(255, 255, 255, 0.08);
+  --teal: #0ea5e9;
+  --teal-light: #38bdf8;
+  --sb-active-bg: rgba(14, 165, 233, 0.12);
+  --gold: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+}
+
+body.light-mode {
+  --navy: #f4f7fa;
+  --deep: #e4ecf4;
+  --sb-bg: #dce6f0;
+  --card: #ffffff;
+  --surface: #edf2f7;
+  --text: #1a2d3f;
+  --muted: #5a7894;
+  --border: rgba(0, 0, 0, 0.08);
+  --teal: #0284c7;
+  --teal-light: #0369a1;
+  --sb-active-bg: rgba(2, 132, 199, 0.1);
+  --gold: #b45309;
+  --green: #16a34a;
+  --red: #dc2626;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+body {
+  background-color: var(--navy);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================
+   CARDS & SURFACES
+   ============================================ */
+
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+.surface {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+
+.sidebar {
+  background-color: var(--sb-bg);
+  border-color: var(--border);
+}
+
+.sidebar-link {
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+  color: var(--text);
+  background-color: var(--sb-active-bg);
+}
+
+.sidebar-link.active {
+  color: var(--teal-light);
+  background-color: var(--sb-active-bg);
+  font-weight: 500;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn-primary {
+  background-color: var(--teal);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--teal-light);
+  color: var(--navy);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--sb-active-bg);
+  border-color: var(--teal);
+}
+
+.btn-gold {
+  background-color: var(--gold);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-gold:hover {
+  opacity: 0.9;
+}
+
+/* ============================================
+   TEXT
+   ============================================ */
+
+.text-primary {
+  color: var(--text);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-teal {
+  color: var(--teal);
+}
+
+.text-teal-light {
+  color: var(--teal-light);
+}
+
+.text-gold {
+  color: var(--gold);
+}
+
+.text-green {
+  color: var(--green);
+}
+
+.text-red {
+  color: var(--red);
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+
+input, select, textarea {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  transition: border-color 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--sb-active-bg);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* ============================================
+   STATUS BADGES
+   ============================================ */
+
+.badge-success {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--green);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 9999px;
+  padding: 0.125rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-warning {
+  background-color: rgba(244, 162, 97, 0.15);
+  color: var(--gold);
+  border: 1px solid rgba(244, 162, 97, 0.3);
+  border-radius: 9999px;
+  padding: 0.125rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-error {
+  background-color: rgba(230, 57, 70, 0.15);
+  color: var(--red);
+  border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: 9999px;
+  padding: 0.125rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+
+.progress-bar {
+  background-color: var(--border);
+  border-radius: 9999px;
+  overflow: hidden;
+  height: 0.5rem;
+}
+
+.progress-fill {
+  background-color: var(--teal);
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.5s ease;
+}
+
+.progress-fill.gold {
+  background-color: var(--gold);
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--muted);
+}
+
+/* ============================================
+   TRANSITIONS
+   ============================================ */
+
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
