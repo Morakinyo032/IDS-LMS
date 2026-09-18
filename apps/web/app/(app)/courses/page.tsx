@@ -9,6 +9,7 @@ interface Course {
   title: string;
   description: string;
   price: number;
+  imageUrl?: string | null; 
   instructor: { id: string; name: string };
   _count: { enrollments: number };
 }
