@@ -125,10 +125,10 @@ router.post(
         if (!userAnswer) continue;
 
         if (question.type === 'MULTIPLE_CHOICE' || question.type === 'TRUE_FALSE') {
-          const correctOption = question.options.find(o => o.isCorrect);
+          const correctOption = question.options.find((o: any) => o.isCorrect);
           isCorrect = correctOption?.id === userAnswer.answer;
         } else if (question.type === 'SHORT_ANSWER') {
-          const correctOption = question.options.find(o => o.isCorrect);
+          const correctOption = question.options.find((o: any) => o.isCorrect);
           isCorrect = userAnswer.answer.toLowerCase().trim() === correctOption?.text.toLowerCase().trim();
         }
 
