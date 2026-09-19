@@ -147,8 +147,12 @@ router.post(
       
       const course = await prisma.course.create({
         data: {
-          ...data,
+          title: data.title,
+          description: data.description,
+          price: data.price ?? 0,
+          imageUrl: data.imageUrl || null,
           instructorId: req.user!.userId,
+          published: true,
         },
       });
       
