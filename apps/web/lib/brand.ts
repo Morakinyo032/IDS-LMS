@@ -9,7 +9,7 @@ export const brand = {
   colors: {
     primary: '#1e3a5f',       // Deep navy blue (corporate, trust)
     primaryLight: '#2d5f8a',  // Medium blue
-    primaryDark: '#0f1f33',   // Very dark navy
+    primaryDark: '#102743',   // Very dark navy
     secondary: '#f59e0b',     // Gold/Amber (warmth, energy)
     accent: '#0ea5e9',        // Sky blue (innovation)
     green: '#10b981',         // Emerald (success)
