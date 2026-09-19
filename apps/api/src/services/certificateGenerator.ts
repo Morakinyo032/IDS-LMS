@@ -4,7 +4,7 @@ export function generateCertificatePDF(
   studentName: string,
   courseTitle: string,
   issuedDate: Date
-): PDFDocument {
+): any {
   const doc = new PDFDocument({
     layout: 'landscape',
     size: 'A4',
