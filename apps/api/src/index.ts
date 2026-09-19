@@ -59,10 +59,19 @@ app.get('/health', (req: Request, res: Response) => {
 // Test DB connection
 app.get('/api/test-db', async (req: Request, res: Response) => {
   try {
+    console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
+    
     const userCount = await prisma.user.count();
     res.json({ success: true, userCount, message: 'Database connected!' });
-  } catch (error) {
-    res.status(500).json({ success: false, error: 'Database connection failed' });
+  } catch (error: any) {
+    console.error('=== DB ERROR ===');
+    console.error(error.message);
+    console.error(error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Database connection failed',
+      details: error.message 
+    });
   }
 });
 
