@@ -52,13 +52,12 @@ router.post(
             select: { id: true, title: true },
           },
           user: {
-            select: { id: true, name: true },
+            select: { id: true, name: true, email: true },
           },
         },
       });
 
       // Send completion email (console log for dev)
-      const { sendCompletionEmail } = await import('../services/email');
       sendCompletionEmail(
         certificate.user.email || '',
         certificate.user.name,

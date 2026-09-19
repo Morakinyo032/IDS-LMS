@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { prisma } from '@lms/database';
 import authRouter from './routes/auth';
-import { authenticate } from './middleware/auth';
+import { AuthRequest } from './middleware/auth';
 import coursesRouter from './routes/courses';
 import modulesRouter from './routes/modules';
 import enrollmentsRouter from './routes/enrollments';
@@ -69,13 +69,9 @@ app.get('/api/test-db', async (req: Request, res: Response) => {
 // Health check and auth routes go here…
 
 // Protected profile endpoint
-app.get(
-  '/api/profile',
-  authenticate(),       // <-- protects this route
-  async (req, res) => {
-    const { userId } = req.user!
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
+app.get('/api/profile', async (req: AuthRequest, res: Response) => {
+  const user = await prisma.user.findUnique({
+    where: { id: req.user!.userId },
       select: { id: true, email: true, name: true, role: true }
     })
     res.json({ user })

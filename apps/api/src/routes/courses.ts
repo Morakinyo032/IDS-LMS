@@ -187,7 +187,7 @@ router.put(
       
       const updated = await prisma.course.update({
         where: { id: req.params.id },
-        data,
+        data: data,  // Don't include instructorId
       });
       
       res.json({ course: updated });
