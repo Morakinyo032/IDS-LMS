@@ -31,6 +31,8 @@ model User {
   forumReplies ForumReply[]
   createdSchools School[]
   schoolEnrollments SchoolEnrollment[]
+  schoolId      String?      // ← Must be here
+  school            School?          @relation("UserSchool", fields: [schoolId], references: [id])
 }
 
 model Course {
@@ -274,6 +276,7 @@ model School {
   published   Boolean      @default(false)
   createdBy   String
   creator     User         @relation(fields: [createdBy], references: [id])
+  users       User[]       @relation("UserSchool")
   classes     SchoolClass[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt

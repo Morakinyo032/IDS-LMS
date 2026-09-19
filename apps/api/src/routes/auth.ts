@@ -8,7 +8,7 @@ import { sendWelcomeEmail } from '../services/email';
 
 const router = Router()
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-key-12345'
-const JWT_EXPIRES = process.env.JWT_EXPIRES_IN || '7d'
+const JWT_EXPIRES: any = process.env.JWT_EXPIRES_IN || '7d'
 
 //console.log('JWT_SECRET exists:', !!JWT_SECRET)
 
@@ -36,7 +36,7 @@ router.post('/register', async (req: Request, res: Response) => {
     })
     // After user creation, add:
     sendWelcomeEmail(user.email, user.name).catch(console.error);
-    const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, { expiresIn: JWT_EXPIRES })
+    const token = jwt.sign({ userId: user.id, role: user.role, schoolId: user.schoolId }, JWT_SECRET, { expiresIn: JWT_EXPIRES })
     res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } })
 
   } catch (err) {
