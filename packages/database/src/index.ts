@@ -4,7 +4,13 @@ import dotenv from 'dotenv'
 import path from 'path'
 
 // Load .env from the database package
-dotenv.config({ path: path.join(__dirname, '..', '.env') })
+// Only load .env locally (not needed in production)
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    const { config } = require('dotenv');
+    config();
+  } catch {}
+}
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient }
 
