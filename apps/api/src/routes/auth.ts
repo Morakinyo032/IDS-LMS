@@ -24,45 +24,95 @@ const loginSchema = z.object({
 })
 
 // POST /auth/register
-router.post('/register', async (req: Request, res: Response) => {
+router.post('/register', async (req, res) => {
   try {
-    const { name, email, password } = registerSchema.parse(req.body)
-    const existing = await prisma.user.findUnique({ where: { email } })
-    if (existing) return res.status(400).json({ error: 'Email already in use' })
+    const { name, email, password, role } = req.body;
 
-    const hash = await bcrypt.hash(password, 10)
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) return res.status(400).json({ error: 'Email already in use' });
+
+    const hash = await bcrypt.hash(password, 10);
+    
+    // Determine role and approval status
+    const requestedRole = role === 'INSTRUCTOR' ? 'PENDING_INSTRUCTOR' : 'STUDENT';
+    const isApproved = role !== 'INSTRUCTOR';  // Auto-approve students
+
     const user = await prisma.user.create({
-      data: { name, email, password: hash }
-    })
-    // After user creation, add:
-    sendWelcomeEmail(user.email, user.name).catch(console.error);
-    const token = jwt.sign({ userId: user.id, role: user.role, schoolId: user.schoolId }, JWT_SECRET, { expiresIn: JWT_EXPIRES })
-    res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } })
+      data: {
+        name,
+        email,
+        password: hash,
+        role: requestedRole as any,
+        approved: isApproved,
+      },
+    });
 
-  } catch (err) {
-    res.status(400).json({ error: (err as any).message })
-  }
-})
-
-// POST /auth/login
-router.post('/login', async (req: Request, res: Response) => {
-  try {
-    const { email, password } = loginSchema.parse(req.body)
-    const user = await prisma.user.findUnique({ where: { email } })
-    if (!user) return res.status(400).json({ error: 'Invalid credentials' })
-    const valid = await bcrypt.compare(password, user.password)
-    if (!valid) return res.status(400).json({ error: 'Invalid credentials' })
+    // If instructor, don't give them a token yet
+    if (role === 'INSTRUCTOR') {
+      return res.status(201).json({
+        message: 'Your instructor application is pending approval. You will be notified once approved.',
+        pendingApproval: true,
+      });
+    }
 
     const token = jwt.sign(
-                    { userId: user.id, role: user.role, schoolId: user.schoolId },
-                    JWT_SECRET,
-                    { expiresIn: JWT_EXPIRES as any }
-                  )
-    res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role, schoolId: user.schoolId } })
+      { userId: user.id, role: user.role, schoolId: user.schoolId },
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES as any }
+    );
 
+    res.json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        schoolId: user.schoolId,
+      },
+    });
   } catch (err) {
-    res.status(400).json({ error: (err as any).message })
+    res.status(400).json({ error: (err as any).message });
   }
-})
+});
+
+// POST /auth/login
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = loginSchema.parse(req.body);
+    const user = await prisma.user.findUnique({ where: { email } });
+    
+    if (!user) return res.status(400).json({ error: 'Invalid credentials' });
+    
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) return res.status(400).json({ error: 'Invalid credentials' });
+
+    // Block pending instructors
+    if (user.role === 'PENDING_INSTRUCTOR' || !user.approved) {
+      return res.status(403).json({ 
+        error: 'Your account is pending approval. Please contact the administrator.' 
+      });
+    }
+
+    const token = jwt.sign(
+      { userId: user.id, role: user.role, schoolId: user.schoolId },
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES as any }
+    );
+
+    res.json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        schoolId: user.schoolId,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({ error: (err as any).message });
+  }
+});
 
 export default router

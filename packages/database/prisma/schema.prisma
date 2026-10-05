@@ -11,6 +11,7 @@ enum Role {
   ADMIN
   INSTRUCTOR
   STUDENT
+  PENDING_INSTRUCTOR 
 }
 
 model User {
@@ -18,7 +19,10 @@ model User {
   email           String           @unique
   name            String
   password        String
-  role            Role             @default(STUDENT)
+  role          Role     @default(STUDENT)
+  approved      Boolean  @default(true)  // ← Add this (true for students, false for instructors)
+  approvedBy    String?  // ← Who approved the instructor
+  approvedAt    DateTime? // ← When approved
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
   courses         Course[]         @relation("InstructorCourses")

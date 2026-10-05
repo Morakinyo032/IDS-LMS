@@ -167,7 +167,14 @@ export default function CourseCatalogPage() {
                     href={`/courses/${course.id}`}
                     className="block group"
                     >
-                    <div className="card overflow-hidden hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02]">
+                    <div 
+                      className="overflow-hidden hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02]"
+                      style={{
+                        backgroundColor: 'var(--card)',
+                        border: '1px solid var(--border)',
+                        borderRadius: '0.75rem',
+                      }}
+                    >
                         <div className="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center overflow-hidden">
                         {course.imageUrl ? (
                           <img 

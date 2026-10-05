@@ -1,14 +1,15 @@
 import { defineConfig } from 'prisma/config'
-import dotenv from 'dotenv'
-import path from 'path'
+import { config } from 'dotenv'
+import { resolve } from 'path'
 
-// Load .env file
-dotenv.config({ path: path.join(__dirname, '.env') })
+// Load .env from the current working directory
+config({ path: resolve(process.cwd(), '.env') })
 
 export default defineConfig({
-  datasources: {
+  datasource: {
     db: {
       url: process.env.DATABASE_URL || '',
     },
+    url: process.env.DATABASE_URL || '',
   },
 })

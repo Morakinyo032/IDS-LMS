@@ -21,6 +21,7 @@ import forumRouter from './routes/forum';
 import uploadRouter from './routes/upload';
 import resourcesRouter from './routes/resources';
 import schoolRouter from './routes/school';
+import adminRouter from './routes/admin';
 
 
 
@@ -47,7 +48,7 @@ app.use('/api/liveclass', liveclassRouter);
 app.use('/api/forum', forumRouter);
 app.use('/api/resources', resourcesRouter);
 app.use('/api/school', schoolRouter);
-
+app.use('/api/admin', adminRouter);
 
 
 // Health check
