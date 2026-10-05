@@ -83,22 +83,29 @@ export default function ManageSchoolsPage() {
       ) : (
         <div className="space-y-3">
           {schools.map(school => (
-            <div key={school.id} className="card p-4 flex justify-between items-center">
-              <div>
-                <h3 className="font-semibold text-lg">{school.name}</h3>
-                {school.description && <p className="text-sm text-gray-500">{school.description}</p>}
-                <p className="text-xs text-gray-400 mt-1">{school._count?.classes || 0} classes</p>
+            <div className="card p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-lg truncate" style={{ color: 'var(--text)' }}>{school.name}</h3>
+                {school.description && (
+                  <p className="text-sm mt-1 line-clamp-2" style={{ color: 'var(--muted)' }}>{school.description}</p>
+                )}
+                <p className="text-xs mt-1" style={{ color: 'var(--muted)' }}>
+                  {school._count?.classes || 0} classes
+                </p>
               </div>
-              <div className="flex gap-2">
+              
+              <div className="flex flex-wrap gap-2">
                 <Link
                   href={`/admin/schools/${school.id}/classes`}
-                  className="px-3 py-1 border rounded text-sm hover:bg-gray-50"
+                  className="px-3 py-1.5 border rounded-lg text-sm whitespace-nowrap"
+                  style={{ borderColor: 'var(--border)', color: 'var(--text)' }}
                 >
                   Manage Classes
                 </Link>
                 <button
                   onClick={() => deleteSchool(school.id)}
-                  className="px-3 py-1 text-red-500 border border-red-200 rounded text-sm hover:bg-red-50"
+                  className="px-3 py-1.5 rounded-lg text-sm"
+                  style={{ backgroundColor: 'rgba(239,68,68,0.1)', color: 'var(--red)' }}
                 >
                   🗑️
                 </button>

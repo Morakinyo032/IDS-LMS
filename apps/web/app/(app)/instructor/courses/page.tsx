@@ -85,18 +85,19 @@ export default function InstructorCoursesPage() {
         <div className="space-y-4">
           {courses.map((course) => (
             <div key={course.id} className="bg-white border rounded-lg p-6">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="text-lg font-semibold mb-1">{course.title}</h3>
-                  <div className="flex gap-4 text-sm text-gray-500">
-                    <span>{course._count.modules} modules</span>
-                    <span>{course._count.enrollments} students</span>
+              <div className="card p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-lg truncate" style={{ color: 'var(--text)' }}>{course.title}</h3>
+                  <div className="flex flex-wrap gap-3 text-sm mt-1" style={{ color: 'var(--muted)' }}>
+                    <span>{course._count?.modules || 0} modules</span>
+                    <span>{course._count?.enrollments || 0} students</span>
                     <span className={course.published ? 'text-green-600' : 'text-yellow-600'}>
                       {course.published ? '📗 Published' : '📝 Draft'}
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                
+                <div className="flex flex-wrap gap-2">
                   <Link href={`/instructor/courses/${course.id}/settings`} className="btn-secondary text-xs">⚙️ Settings</Link>
                   <Link
                     href={`/instructor/courses/${course.id}/edit`}

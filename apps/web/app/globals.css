@@ -291,28 +291,42 @@ html, body {
   max-width: 100vw;
 }
 
-/* Make tables scroll horizontally on mobile */
+/* Prevent horizontal scrolling on all pages */
 @media (max-width: 768px) {
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  
-  /* Stack grids on mobile */
-  .grid {
+  /* Force all grids to single column */
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
     grid-template-columns: 1fr !important;
   }
   
-  /* Full-width cards */
+  /* Prevent overflow */
+  body, main {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  
+  /* Container padding */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Make tables scrollable */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Full width cards */
   .card {
-    width: 100%;
     max-width: 100%;
   }
   
-  /* Reduce padding on mobile */
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  /* Dashboard stat cards - 2 per row */
+  .grid.grid-cols-2.gap-4,
+  .grid.grid-cols-4.gap-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
