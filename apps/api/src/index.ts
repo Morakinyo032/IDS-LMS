@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { prisma } from '@lms/database';
 import authRouter from './routes/auth';
-import { AuthRequest } from './middleware/auth';
+import { authenticate, AuthRequest } from './middleware/auth';
 import coursesRouter from './routes/courses';
 import modulesRouter from './routes/modules';
 import enrollmentsRouter from './routes/enrollments';
