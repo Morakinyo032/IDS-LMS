@@ -26,7 +26,6 @@ export default function LandingNavbar() {
         <Link href="/" className="flex items-center gap-0">
           <img
             src={brand.logoPath}
-            alt={brand.schoolName}
             className="h-20 w-auto object-contain"
           />
           <span
