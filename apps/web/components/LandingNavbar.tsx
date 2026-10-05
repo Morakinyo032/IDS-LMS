@@ -26,14 +26,9 @@ export default function LandingNavbar() {
         <Link href="/" className="flex items-center gap-0">
           <img
             src={brand.logoPath}
+            alt={brand.schoolName}
             className="h-20 w-auto object-contain"
-          />
-          <span
-            className="font-bold text-lg hidden sm:block"
-            style={{ color: 'var(--teal)' }}
-          >
-            {brand.schoolName}
-          </span>
+          /> 
         </Link>
 
         {/* Navigation */}
