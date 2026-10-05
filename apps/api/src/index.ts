@@ -78,14 +78,29 @@ app.get('/api/test-db', async (req: Request, res: Response) => {
 // Health check and auth routes go here…
 
 // Protected profile endpoint
-app.get('/api/profile', async (req: AuthRequest, res: Response) => {
-  const user = await prisma.user.findUnique({
-    where: { id: req.user!.userId },
-      select: { id: true, email: true, name: true, role: true }
-    })
-    res.json({ user })
+app.get('/api/profile', authenticate(), async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.user?.userId;
+
+    if (!userId) {
+      return res.status(401).json({ error: 'No user in token' });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true, name: true, role: true, schoolId: true },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({ user });
+  } catch (error: any) {
+    console.error('Profile error:', error.message);
+    res.status(500).json({ error: error.message });
   }
-)
+});
 
 // 404 handler
 app.use((req: Request, res: Response) => {
